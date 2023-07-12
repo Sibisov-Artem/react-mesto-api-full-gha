@@ -209,7 +209,7 @@ function App() {  //функциональный компонент App
 
   useEffect(() => {
     handleCheckToken();
-  }, [loggedIn])
+  }, [])
 
   function onSignOut() {
     localStorage.removeItem('jwt');

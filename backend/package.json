@@ -7,7 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "lint": "npx eslint .",
     "start": "node app.js",
-    "dev": "cross-env PORT=3000 nodemon app.js"
+    "dev": "cross-env PORT=4000 nodemon app.js"
   },
   "author": "Sibisov Artem",
   "license": "ISC",
