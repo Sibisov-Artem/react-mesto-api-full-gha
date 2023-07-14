@@ -123,10 +123,9 @@ class Api {
 }
 
 export const api = new Api({
-  // baseUrl: 'https://mesto.nomoreparties.co/v1/cohort-63',
-  baseUrl: 'http://localhost:4000', // переадресовал запросы 
+  baseUrl: 'http://localhost:7000',
   headers: {
-    authorization: 'a15016d5-ae9c-4339-845d-3268b7fcaab2', //мой токен
+    authorization: localStorage.getItem('token'), //мой токен // localStorage.getItem('token'),
     'Content-Type': 'application/json'
   }
 });
