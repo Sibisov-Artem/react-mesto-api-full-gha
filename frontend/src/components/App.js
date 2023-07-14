@@ -175,7 +175,7 @@ function App() {  //функциональный компонент App
   function handleAuthorization(inputData) {
     login(inputData)
       .then((data) => {
-        localStorage.setItem("jwt", data.token);
+        localStorage.setItem("token", data.token);
         setSuccessAuthResponse(true);
         setIsInfoTooltipPopupOpen(true);
         setLoggedIn(true);
@@ -193,9 +193,9 @@ function App() {  //функциональный компонент App
   const [email, setEmail] = useState('');
 
   function handleCheckToken() {
-    const jwt = localStorage.getItem('jwt');
-    if (jwt) {
-      checkToken(jwt)
+    const token = localStorage.getItem('token');
+    if (token) {
+      checkToken(token)
         .then((data) => {
           setEmail(data.data.email);
           setLoggedIn(true);
@@ -212,7 +212,7 @@ function App() {  //функциональный компонент App
   }, [])
 
   function onSignOut() {
-    localStorage.removeItem('jwt');
+    localStorage.removeItem('token');
     setLoggedIn(false);
   }
 
