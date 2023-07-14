@@ -10,7 +10,7 @@ const ConflictError = require('../utils/errors/ConflictError'); // 409
 const getUsers = (req, res, next) => {
   User.find({})
     .then((users) => res.send({ data: users }))
-    .catch(next);
+    .catch(next); я
 };
 
 const getUserById = (req, res, next) => {
@@ -136,7 +136,7 @@ const login = (req, res, next) => {
 
 const getCurrentUser = (req, res, next) => {
   User.findById(req.user._id)
-    .then((user) => res.send({ data: user }))
+    .then((user) => res.send(user))
     .catch(next);
 };
 
