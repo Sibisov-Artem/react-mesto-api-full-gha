@@ -60,7 +60,7 @@ const likeCard = (req, res, next) => {
       next(new NotFoundError('Передан несуществующий _id карточки.'));
       return;
     }
-    res.send({ data: card });
+    res.send(card);
   })
     .catch((err) => {
       console.log(err.name); // CastError
@@ -83,7 +83,7 @@ const dislikeCard = (req, res, next) => {
       next(new NotFoundError('Передан несуществующий _id карточки.'));
       return;
     }
-    res.send({ data: card });
+    res.send(card);
   })
     .catch((err) => {
       if (err.name === 'CastError') {
