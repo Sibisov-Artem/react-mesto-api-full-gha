@@ -197,7 +197,7 @@ function App() {  //функциональный компонент App
     if (token) {
       checkToken(token)
         .then((data) => {
-          setEmail(data.data.email);
+          setEmail(data.email);
           setLoggedIn(true);
           navigate(location.pathname); //чтоб оставаться при обновлении страницы на том же месте где и были
         })
@@ -209,7 +209,7 @@ function App() {  //функциональный компонент App
 
   useEffect(() => {
     handleCheckToken();
-  }, [])
+  }, [loggedIn])
 
   function onSignOut() {
     localStorage.removeItem('token');
