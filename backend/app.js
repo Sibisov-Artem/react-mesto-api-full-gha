@@ -9,6 +9,7 @@ const cardRoutes = require('./routes/cards');
 const { login, createUser } = require('./controllers/users');
 const auth = require('./middlewares/auth');
 const errorHandler = require('./middlewares/errorsHandler');
+const { requestLogger, errorLogger } = require('./middlewares/logger');
 
 const NotFoundError = require('./utils/errors/NotFoundError');
 
@@ -25,6 +26,8 @@ mongoose.connect('mongodb://127.0.0.1:27017/mestodb', {
 const app = express();
 
 app.use(cors());
+
+app.use(requestLogger); // подключаем логгер запросов до всех обработчиков роутов
 
 app.get('/', (req, res) => {
   res.send('проверка');
@@ -53,6 +56,8 @@ app.use(auth);
 
 app.use('/users', userRoutes);
 app.use('/cards', cardRoutes);
+
+app.use(errorLogger); // нужно подключить после обработчиков роутов и до обработчиков ошибок
 
 app.use((req, res, next) => {
   next(new NotFoundError('Тут ничего нет'));
