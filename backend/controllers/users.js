@@ -10,7 +10,7 @@ const ConflictError = require('../utils/errors/ConflictError'); // 409
 const getUsers = (req, res, next) => {
   User.find({})
     .then((users) => res.send({ data: users }))
-    .catch(next); я
+    .catch(next);
 };
 
 const getUserById = (req, res, next) => {
@@ -80,7 +80,7 @@ const updateUserById = (req, res, next) => {
         next(new NotFoundError(' Пользователь с указанным _id не найден.'));
         return;
       }
-      res.send({ data: user });
+      res.send(user);
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
