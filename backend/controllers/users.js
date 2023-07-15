@@ -102,7 +102,7 @@ const uploadAvatar = (req, res, next) => {
         next(new NotFoundError('Пользователь с указанным _id не найден.'));
         return;
       }
-      res.send({ data: user });
+      res.send(user);
     })
     .catch((err) => {
       if (err.name === 'ValidationError') {
