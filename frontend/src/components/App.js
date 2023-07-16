@@ -200,6 +200,7 @@ function App() {  //функциональный компонент App
           setEmail(data.email);
           setLoggedIn(true);
           navigate(location.pathname); //чтоб оставаться при обновлении страницы на том же месте где и были
+          setCurrentUser(data);
         })
         .catch((err) => {
           console.log(err); // выведем ошибку в консоль
