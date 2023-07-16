@@ -1,7 +1,6 @@
 class Api {
   constructor(options) {
     this.url = options.baseUrl;
-    this.headers = options.headers;
   }
 
   _checkResponse(res) {
@@ -15,24 +14,33 @@ class Api {
     return fetch(url, options).then(this._checkResponse)
   }
 
+  _giveHeaders() {
+    const token = localStorage.getItem('token');
+    const newHeaderObj = {authorization: `Bearer ${token}`,
+      'Content-Type': 'application/json'};
+    return newHeaderObj;
+  }
+
   // метод получения информации о пользователе с сервера
   getUser() {
+    const token = localStorage.getItem('token');
     return this._request(`${this.url}/users/me`, {
-      headers: this.headers
+      headers: {...this._giveHeaders()},
     })
   }
 
   // запрос карточек
   getInitialCards() {
     return this._request(`${this.url}/cards`, {
-      headers: this.headers
+      headers: {...this._giveHeaders()},
+      
     })
   }
 
   editUser(inputData) {  //методом PATCH
     return this._request(`${this.url}/users/me`, {
       method: 'PATCH',
-      headers: this.headers,
+      headers: {...this._giveHeaders()},
       body: JSON.stringify({
         name: inputData.name,
         about: inputData.about
@@ -43,7 +51,7 @@ class Api {
   addNewCard(inputData) {    //методом POST
     return this._request(`${this.url}/cards`, {
       method: 'POST',
-      headers: this.headers,
+      headers: {...this._giveHeaders()},
       body: JSON.stringify({
         name: inputData.name,
         link: inputData.link
@@ -54,21 +62,21 @@ class Api {
   deleteCard(cardId) {
     return this._request(`${this.url}/cards/${cardId}`, {
       method: 'DELETE',
-      headers: this.headers,
+      headers: {...this._giveHeaders()},
     })
   }
 
   addLike(cardId) {
     return this._request(`${this.url}/cards/${cardId}/likes`, {
       method: 'PUT',
-      headers: this.headers,
+      headers: {...this._giveHeaders()},
     })
   }
 
   deleteLike(cardId) {
     return this._request(`${this.url}/cards/${cardId}/likes`, {
       method: 'DELETE',
-      headers: this.headers,
+      headers: {...this._giveHeaders()},
     })
   }
 
@@ -79,7 +87,7 @@ class Api {
   changeAvatar(inputData) {
     return this._request(`${this.url}/users/me/avatar`, {
       method: 'PATCH',
-      headers: this.headers,
+      headers: {...this._giveHeaders()},
       body: JSON.stringify({
         avatar: inputData.avatar, //avatarUrl
       }),
@@ -89,8 +97,5 @@ class Api {
 
 export const api = new Api({
   baseUrl: 'http://localhost:4000',
-  headers: {
-    authorization: localStorage.getItem('token'), //мой токен // localStorage.getItem('token'),
-    'Content-Type': 'application/json'
-  }
+  
 });
