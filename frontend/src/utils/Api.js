@@ -123,7 +123,7 @@ class Api {
 }
 
 export const api = new Api({
-  baseUrl: 'http://localhost:3000',
+  baseUrl: 'http://localhost:4000',
   headers: {
     authorization: localStorage.getItem('token'), //мой токен // localStorage.getItem('token'),
     'Content-Type': 'application/json'
