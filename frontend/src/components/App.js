@@ -25,16 +25,6 @@ function App() {  //функциональный компонент App
   const [cards, setCards] = useState([]);
 
 
-  useEffect(() => {
-    api.getInitialCards()
-      .then((data) => {
-        setCards(data);
-      })
-      .catch((err) => {
-        console.log(err); // выведем ошибку в консоль
-      });
-  }, [])
-
 
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
   function handleEditProfileClick() { // обработчик открытия попап профиля
@@ -91,7 +81,19 @@ function App() {  //функциональный компонент App
 
   const [currentUser, setCurrentUser] = useState({ name: '', about: '', _id: '' });
 
+  
+
   useEffect(() => {
+    api.getInitialCards()
+      .then((data) => {
+        setCards(data);
+      })
+      .catch((err) => {
+        console.log(err); // выведем ошибку в консоль
+      });
+ 
+
+  
     api.getUser()
       .then((data) => {
         setCurrentUser(data);
@@ -205,6 +207,13 @@ function App() {  //функциональный компонент App
         .catch((err) => {
           console.log(err); // выведем ошибку в консоль
         });
+        api.getInitialCards()
+      .then((data) => {
+        setCards(data);
+      })
+      .catch((err) => {
+        console.log(err); // выведем ошибку в консоль
+      });
     }
   }
 
