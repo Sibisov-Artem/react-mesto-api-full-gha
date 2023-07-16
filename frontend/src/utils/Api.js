@@ -23,7 +23,6 @@ class Api {
 
   // метод получения информации о пользователе с сервера
   getUser() {
-    const token = localStorage.getItem('token');
     return this._request(`${this.url}/users/me`, {
       headers: {...this._giveHeaders()},
     })
