@@ -4,10 +4,6 @@ class Api {
     this.headers = options.headers;
   }
 
-  // _request(url, options) {       //если останется время - перереработать с применением этого
-  //   return fetch(url, options).then(this._checkResponse)
-  // } а также пройтись по остальным пунктам "можно лучше"
-
   _checkResponse(res) {
     if (res.ok) {
       return res.json();
@@ -26,20 +22,6 @@ class Api {
     })
   }
 
-  // было ранее так:
-  /*
-  getUser() {
-    return fetch(`${this.url}/users/me`, {
-      headers: this.headers
-    })
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        }
-        return Promise.reject(`Что-то пошло не так: ${res.status}`);
-      })
-  }*/
-
   // запрос карточек
   getInitialCards() {
     return this._request(`${this.url}/cards`, {
@@ -48,8 +30,6 @@ class Api {
   }
 
   editUser(inputData) {  //методом PATCH
-
-
     return this._request(`${this.url}/users/me`, {
       method: 'PATCH',
       headers: this.headers,
@@ -93,22 +73,7 @@ class Api {
   }
 
   changeLikeCardStatus(cardId, isLiked) {
-
     return isLiked ? this.addLike(cardId) : this.deleteLike(cardId)
-
-    // if (isLiked) {
-    //   return this._request(`${this.url}/cards/${cardId}/likes`, {
-    //         method: 'PUT',
-    //         headers: this.headers,
-    //       })
-    // } else {
-    //   return this._request(`${this.url}/cards/${cardId}/likes`, {
-    //         method: 'DELETE',
-    //         headers: this.headers,
-    //       })
-    // }
-
-
   }
 
   changeAvatar(inputData) {
