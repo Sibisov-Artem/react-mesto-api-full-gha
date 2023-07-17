@@ -1,5 +1,5 @@
 // export const BASE_URL = ' https://auth.nomoreparties.co';
-export const BASE_URL = ' http://158.160.115.80:4000';
+export const BASE_URL = ' http://158.160.115.80:3000';
 
 function checkResponse(res) {
     if (res.ok) {
