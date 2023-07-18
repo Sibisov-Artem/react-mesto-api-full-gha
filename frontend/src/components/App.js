@@ -22,86 +22,66 @@ import { AppContext } from '../contexts/AppContext'
 
 function App() {  //функциональный компонент App
 
+  const location = useLocation();
+
+  const navigate = useNavigate();
+
   const [cards, setCards] = useState([]);
-
-
-
-  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
-  function handleEditProfileClick() { // обработчик открытия попап профиля
-    setIsEditProfilePopupOpen(true);
-  }
-
-
-  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
-  function handleAddPlaceClick() { // обработчик открытия попап добавления места
-    setIsAddPlacePopupOpen(true);
-  }
-
-
-  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
-  function handleEditAvatarClick() { // обработчик открытия попап аватарки 
-    setIsEditAvatarPopupOpen(true);
-  }
-
-  const [isInfoTooltipPopupOpen, setIsInfoTooltipPopupOpen] = useState(false);
-  const [successAuthResponse, setSuccessAuthResponse] = useState(false);
-
-
   const [selectedCard, setSelectedCard] = useState({ name: '', link: '' });
-  function handleCardClick(props) {
-    setSelectedCard(props);
-  }
+
+  const [currentUser, setCurrentUser] = useState({ name: '', about: '', _id: '' });
+
+  const [email, setEmail] = useState('');
 
   const [loggedIn, setLoggedIn] = useState(false);
 
   const [isLoading, setIsLoading] = useState(false);
 
-  function handleCardLike(card) {
-    // Снова проверяем, есть ли уже лайк на этой карточке
-    const isLiked = card.likes.some(i => i === currentUser._id);
+  const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = useState(false);
+  const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = useState(false);
+  const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = useState(false);
+  const [isInfoTooltipPopupOpen, setIsInfoTooltipPopupOpen] = useState(false);
 
-    // Отправляем запрос в API и получаем обновлённые данные карточки
-    api.changeLikeCardStatus(card._id, !isLiked).then((newCard) => {
-      setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
-    })
-      .catch((err) => {
-        console.log(err); // выведем ошибку в консоль
-      });
+  const [successAuthResponse, setSuccessAuthResponse] = useState(false);
+
+  function handleEditProfileClick() { // обработчик открытия попап профиля
+    setIsEditProfilePopupOpen(true);
   }
 
-  function handleCardDelete(card) {
-    api.deleteCard(card._id).then(() => {
-      // обновите стейт cards - удаление карточки через filter (не пропускаем свою карточку)
-      setCards((state) => state.filter((c) => c._id !== card._id));
-    })
-      .catch((err) => {
-        console.log(err); // выведем ошибку в консоль
-      });
+  function handleAddPlaceClick() { // обработчик открытия попап добавления места
+    setIsAddPlacePopupOpen(true);
   }
 
-  const [currentUser, setCurrentUser] = useState({ name: '', about: '', _id: '' });
+  function handleEditAvatarClick() { // обработчик открытия попап аватарки 
+    setIsEditAvatarPopupOpen(true);
+  }
 
-  
+  function handleCardClick(props) {
+    setSelectedCard(props);
+  }
 
-  useEffect(() => {
-    api.getInitialCards()
-      .then((data) => {
-        setCards(data);
-      })
-      .catch((err) => {
-        console.log(err); // выведем ошибку в консоль
-      });
- 
-
-  
-    api.getUser()
-      .then((data) => {
-        setCurrentUser(data);
-      })
-      .catch((err) => {
-        console.log(err); // выведем ошибку в консоль
-      });
-  }, [])
+  function handleCheckToken() {
+    const token = localStorage.getItem('token');
+    if (token) {
+      checkToken(token)
+        .then((data) => {
+          setEmail(data.email);
+          setLoggedIn(true);
+          navigate(location.pathname); //чтоб оставаться при обновлении страницы на том же месте где и были
+          setCurrentUser(data);
+        })
+        .catch((err) => {
+          console.log(err); // выведем ошибку в консоль
+        });
+      api.getInitialCards()
+        .then((data) => {
+          setCards(data);
+        })
+        .catch((err) => {
+          console.log(err); // выведем ошибку в консоль
+        });
+    }
+  }
 
   function handleUpdateUser(inputData) {
     setIsLoading(true);
@@ -133,6 +113,29 @@ function App() {  //функциональный компонент App
       })
   }
 
+  function handleCardLike(card) {
+    // Снова проверяем, есть ли уже лайк на этой карточке
+    const isLiked = card.likes.some(i => i === currentUser._id);
+
+    // Отправляем запрос в API и получаем обновлённые данные карточки
+    api.changeLikeCardStatus(card._id, !isLiked).then((newCard) => {
+      setCards((state) => state.map((c) => c._id === card._id ? newCard : c));
+    })
+      .catch((err) => {
+        console.log(err); // выведем ошибку в консоль
+      });
+  }
+
+  function handleCardDelete(card) {
+    api.deleteCard(card._id).then(() => {
+      // обновите стейт cards - удаление карточки через filter (не пропускаем свою карточку)
+      setCards((state) => state.filter((c) => c._id !== card._id));
+    })
+      .catch((err) => {
+        console.log(err); // выведем ошибку в консоль
+      });
+  }
+
   function handleAddPlaceSubmit(inputData) {
     setIsLoading(true);
     api.addNewCard(inputData)
@@ -147,18 +150,7 @@ function App() {  //функциональный компонент App
       .finally(() => {
         setIsLoading(false);
       })
-
   }
-
-  function closeAllPopups() {
-    setIsEditProfilePopupOpen(false);
-    setIsAddPlacePopupOpen(false);
-    setIsEditAvatarPopupOpen(false);
-    setSelectedCard({ name: '', link: '' });
-    setIsInfoTooltipPopupOpen(false)
-  }
-
-  const navigate = useNavigate();
 
   function handleRegistration(inputData) {
     register(inputData)
@@ -190,41 +182,37 @@ function App() {  //функциональный компонент App
       });
   }
 
-  const location = useLocation();
-
-  const [email, setEmail] = useState('');
-
-  function handleCheckToken() {
-    const token = localStorage.getItem('token');
-    if (token) {
-      checkToken(token)
-        .then((data) => {
-          setEmail(data.email);
-          setLoggedIn(true);
-          navigate(location.pathname); //чтоб оставаться при обновлении страницы на том же месте где и были
-          setCurrentUser(data);
-        })
-        .catch((err) => {
-          console.log(err); // выведем ошибку в консоль
-        });
-        api.getInitialCards()
-      .then((data) => {
-        setCards(data);
-      })
-      .catch((err) => {
-        console.log(err); // выведем ошибку в консоль
-      });
-    }
+  function closeAllPopups() {
+    setIsEditProfilePopupOpen(false);
+    setIsAddPlacePopupOpen(false);
+    setIsEditAvatarPopupOpen(false);
+    setSelectedCard({ name: '', link: '' });
+    setIsInfoTooltipPopupOpen(false)
   }
-
-  useEffect(() => {
-    handleCheckToken();
-  }, [loggedIn])
 
   function onSignOut() {
     localStorage.removeItem('token');
     setLoggedIn(false);
   }
+
+  useEffect(() => {
+    handleCheckToken();
+    if (loggedIn) {
+      Promise.all([api.getUser(), api.getInitialCards()])
+        .then(([userData, cardsData]) => {
+          setCards(cardsData);
+          setCurrentUser(userData);
+        })
+        .catch((err) => {
+          console.log(err); // выведем ошибку в консоль
+        });
+    }
+  }, [])
+
+  useEffect(() => {
+    handleCheckToken();
+  }, [loggedIn])
+
 
   return (
     <AppContext.Provider value={{ isLoading, closeAllPopups }}>
@@ -255,8 +243,6 @@ function App() {  //функциональный компонент App
                 onCardDelete={handleCardDelete}
               />} />
 
-
-
             </Routes>
 
             {/* 
@@ -284,20 +270,15 @@ function App() {  //функциональный компонент App
             onAddPlace={handleAddPlaceSubmit}
           />
 
-
-
           <ImagePopup
             card={selectedCard}
           />
-
-
 
           <PopupWithForm
             name='confirmation-remove'
             title='Вы уверены?'
             submitText='Да'
           />
-
 
           <EditAvatarPopup
             isOpen={isEditAvatarPopupOpen}
@@ -308,7 +289,6 @@ function App() {  //функциональный компонент App
             isOpen={isInfoTooltipPopupOpen}
             successAuthResponse={successAuthResponse}
           />
-
 
         </div>
       </CurrentUserContext.Provider>
