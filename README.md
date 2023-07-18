@@ -9,8 +9,8 @@
 
 ## Ссылки на проект
 
-IP-адрес x.x.x.x
+IP-адрес 51.250.84.140
 
-Frontend https://...
+Frontend https://a-sibisov.nomoredomains.xyz
 
-Backend https://...
+Backend https://api.a-sibisov.nomoredomains.xyz
