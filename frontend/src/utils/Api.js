@@ -95,6 +95,6 @@ class Api {
 }
 
 export const api = new Api({
-  baseUrl: 'http://51.250.84.140:3001',
+  baseUrl: 'http://51.250.84.140:3000',
   
 });
