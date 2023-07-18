@@ -95,6 +95,6 @@ class Api {
 }
 
 export const api = new Api({
-  baseUrl: 'http://51.250.84.140:3000',
+  baseUrl: 'api.a-sibisov.nomoredomains.xyz',
   
 });
