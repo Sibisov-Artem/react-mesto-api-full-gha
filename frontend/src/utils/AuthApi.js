@@ -1,5 +1,5 @@
 // export const BASE_URL = ' https://auth.nomoreparties.co';
-export const BASE_URL = 'api.a-sibisov.nomoredomains.xyz';
+export const BASE_URL = 'http://api.a-sibisov.nomoredomains.xyz';
 
 function checkResponse(res) {
     if (res.ok) {
