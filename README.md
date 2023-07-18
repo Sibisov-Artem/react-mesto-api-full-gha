@@ -9,7 +9,7 @@
 
 ## Ссылки на проект
 
-IP-адрес 51.250.84.140
+IP 51.250.84.140
 
 Frontend https://a-sibisov.nomoredomains.xyz
 
