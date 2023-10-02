@@ -97,6 +97,7 @@ class Api {
 }
 
 export const api = new Api({
-  baseUrl: 'https://api.a-sibisov.nomoredomains.xyz',
+  // baseUrl: 'https://api.a-sibisov.nomoredomains.xyz',
+  baseUrl: 'http://localhost:3000',
 
 });
