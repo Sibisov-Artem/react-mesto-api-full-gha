@@ -103,7 +103,7 @@ git clone https://github.com/Sibisov-Artem/react-mesto-api-full-gha.git
 * ***Frontend (запускать из соответствующей директории):***
     * `npm ci` — установка зависимостей
     * `npm run build`  запуск сборки проекта
-    * `npm run start` — запускает проект на локальном сервере
+    * `npm run start` — запускает проект на локальном сервере. Адрес страницы: http://localhost:3000
 
 <!--
 ## Ссылки на проект
