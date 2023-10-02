@@ -94,12 +94,12 @@ git clone https://github.com/Sibisov-Artem/react-mesto-api-full-gha.git
 
 **Запуск проекта:**
 
-* ***Frontend:***
+* ***Frontend (запускать из соответсвующей директории):***
     * `npm ci` — установка зависимостей
     * `npm run build`  запуск сборки проекта
     * `npm run start` — запускает проект на локальном сервере
 
-* ***Backend:***
+* ***Backend (запускать из соответсвующей директории):***
     * `npm ci` — установка зависимостей
     * `npm lint` — запускает проверку линтером
     * `npm run start` — запускает сервер   
